@@ -1,0 +1,6 @@
+name = Multistep Checkout
+description = Transforms checkout into a multistep procedure.
+package = Ubercart - extra
+dependencies[] = uc_cart
+dependencies[] = jquery_ui
+core = 6.x

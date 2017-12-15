@@ -1,0 +1,62 @@
+<?php
+
+/**
+ * @file
+ * Multistep Checkout (uc_multistep_checkout) module.
+ */
+
+/**
+ * Implements hook_init().
+ */
+function uc_multistep_checkout_init() {
+  if (stripos(request_uri(), '/cart/checkout') === 0) {
+    jquery_ui_add(array('ui.core', 'ui.tabs'));
+    drupal_add_js(drupal_get_path('module', 'uc_multistep_checkout') . '/uc_multistep_checkout.js', 'file');
+    drupal_add_css(drupal_get_path('module', 'uc_multistep_checkout') . '/uc_multistep_checkout.css', 'file');
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter() for uc_cart_checkout_form().
+ */
+function uc_multistep_checkout_form_uc_cart_checkout_form_alter(&$form, &$form_state) {
+  // Add what will become tab navigation.
+  $nav = array(
+    '#value' => uc_multistep_checkout_nav(),
+  );
+  array_unshift($form['panes'], $nav);
+
+  // Step 1: from cart contents to customer information.
+  $form['panes']['cart']['#prefix'] = '<div id="step_1">';
+  $form['panes']['customer']['#suffix'] = uc_multistep_checkout_next() . '</div>';
+
+  // Step 2: from delivery information to shipping information.
+  $form['panes']['delivery']['#prefix'] = '<div id="step_2">';
+  $form['panes']['quotes']['#suffix'] = uc_multistep_checkout_next() . '</div>';
+
+  // Step 3: from payment information to comments.
+  $form['panes']['payment']['#prefix'] = '<div id="step_3">';
+  $form['panes']['comments']['#suffix'] = '</div>';
+
+}
+
+/**
+ * Helper function - prepares tab navigation menu.
+ */
+function uc_multistep_checkout_nav() {
+  $items = array(
+    // 'Step 1' to 'Step 3' can be edited if need be.
+    l(t('Step 1: Order and Information'), '', array('fragment' => 'step_1', 'external' => TRUE)),
+    l(t('Step 2: Delivery Details'), '', array('fragment' => 'step_2', 'external' => TRUE)),
+    l(t('Step 3: Payment'), '', array('fragment' => 'step_3', 'external' => TRUE)),
+  );
+  return theme('item_list', $items, NULL, 'ul', array('id' => 'checkout-navigation'));
+}
+
+/**
+ * Helper function - prepares 'Next' link.
+ */
+function uc_multistep_checkout_next() {
+  return '<div class="checkout-next">' . t('Next') . '</div>';
+}
+

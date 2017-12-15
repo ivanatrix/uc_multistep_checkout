@@ -1,0 +1,49 @@
+ul#checkout-navigation {
+  text-align: center;
+  border-bottom: 6px solid #423414;
+  padding-left:0; 
+  border-radius:5px;
+}
+
+ul#checkout-navigation li,
+div.checkout-next {
+  background: none;
+  display: inline;
+  font-size: 1em;
+  margin: 0 20px;
+  padding: 10px;
+  border-radius:10px;
+  border:1px solid #47391C;
+}
+
+ul#checkout-navigation li.ui-state-active,
+div.checkout-next {
+  font-weight: bold;
+  background:url(/sites/default/files/imgs/bottom-navbg.png) no-repeat;
+}
+
+ul#checkout-navigation li a { color:#999; text-decoration:none; }
+
+ul#checkout-navigation li.ui-state-active a {  color: #DDD;
+    font-weight: bold;
+    text-decoration: none; }
+
+#checkout-navigation li.ui-state-default {
+  background-color: #eeeeee;
+}
+
+ul#checkout-navigation a:hover {
+  text-decoration: none;
+}
+
+div.checkout-next {
+  float: right;
+  color:#FFF;
+  font-weight:bold; 
+  cursor:pointer;
+}
+
+/* Required for tabs functionality - do not alter */
+form#uc-cart-checkout-form .ui-tabs-hide {
+  display: none;
+}
